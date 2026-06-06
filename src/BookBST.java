@@ -1,47 +1,65 @@
-class BookBST {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class BookBST {
     private Book root;
-    public void insert(String title, String author, int isbn) {
-        root = insertRec(root, title, author, isbn);
+
+    public void insert(int isbn, String t, String a, int stock) {
+        root = ins(root, isbn, t, a, stock);
     }
-    private Book insertRec(Book root, String title , String author, int isbn){
-        if(root==null){
-            root=new Book(title, author, isbn );
-            return root;
-        }else if (isbn < root.isbn){
-            root.left = insertRec(root.left, title, author, isbn);
-        }else if (isbn > root.isbn){
-            root.right = insertRec(root.right, title, author, isbn);
-        }else{
-            System.out.println("Duplicate ISBN not allowed: " + isbn);
+
+    private Book ins(Book r, int i, String t, String a, int stock) {
+        if (r == null) return new Book(i, t, a, stock);
+        if (i < r.isbn) {
+            r.left = ins(r.left, i, t, a, stock);
+        } else if (i > r.isbn) {
+            r.right = ins(r.right, i, t, a, stock);
+        } else {
+            r.totalStock += stock;
+            r.availableStock += stock;
+            System.out.println("🔄 Existing ISBN found. Inventory restocked.");
         }
-        return root;
+        return r;
     }
 
-    public Book findBookByISBN(int targetIsbn) {
-    // We start the search at the very top of the tree (the root node)
-    return recursiveSearch(root, targetIsbn);
+    public Book search(int i) {
+        return sea(root, i);
     }
 
-    private Book recursiveSearch(Book currentNode, int targetIsbn) {
-    
-    // BASE CASE 1: We hit an empty spot. The book does not exist.
-    if (currentNode == null) {
-        return null; 
+    private Book sea(Book r, int i) {
+        if (r == null || r.isbn == i) return r;
+        return (i < r.isbn) ? sea(r.left, i) : sea(r.right, i);
     }
 
-    // BASE CASE 2: The current node's ISBN matches our target. We found it!
-    if (currentNode.isbn == targetIsbn) {
-        return currentNode; 
+    public void printAlphabetical() {
+        List<Book> bookList = new ArrayList<>();
+        collectNodes(root, bookList);
+
+        if (bookList.isEmpty()) {
+            System.out.println("📚 The catalogue is completely empty.");
+            return;
+        }
+
+        Collections.sort(bookList, new Comparator<Book>() {
+            @Override
+            public int compare(Book b1, Book b2) {
+                return b1.title.compareToIgnoreCase(b2.title);
+            }
+        });
+
+        System.out.println("\n--- 🔤 Books in Alphabetical Order ---");
+        for (Book b : bookList) {
+            System.out.println("• \"" + b.title + "\" by " + b.author + 
+                               " [ISBN: " + b.isbn + "] | Stock Available: " + b.availableStock + "/" + b.totalStock);
+        }
     }
 
-    // RECURSIVE STEP: If we haven't found it, do we go left or right?
-    if (targetIsbn < currentNode.isbn) {
-        // The target is smaller, so we search down the left branch
-        return recursiveSearch(currentNode.left, targetIsbn);
-        
-    } else {
-        // The target is larger, so we search down the right branch
-        return recursiveSearch(currentNode.right, targetIsbn);
+    private void collectNodes(Book node, List<Book> list) {
+        if (node == null) return;
+        collectNodes(node.left, list);  
+        list.add(node);                 
+        collectNodes(node.right, list); 
     }
-}
 }
