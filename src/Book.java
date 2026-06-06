@@ -1,4 +1,4 @@
-public class Book {
+ public class Book {
     public int isbn;
     public String title, author;
     public int totalStock;
