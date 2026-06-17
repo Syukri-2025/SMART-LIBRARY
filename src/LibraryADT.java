@@ -15,21 +15,18 @@ interface LibraryADT {
      * @param title the title of the book
      * @param author the author of the book
      * @param stock the number of copies added or available in stock
-     * @return true if the book is successfully added or restocked, false otherwise
      */
     void addBook(int isbn, String title, String author, int stock);
     
      /**
      * Searches for a book in the catalogue using its ISBN.
      * @param isbn the ISBN of the book to search for
-     * @return true if the book is found, false otherwise
      */
     void searchBook(int isbn);
     
     /**
      * Borrows a book from the catalogue and updates available stock.
      * @param isbn the ISBN of the book to borrow
-     * @return true if the book is successfully borrowed, false otherwise
      */
     void borrowBook(int isbn);
     
@@ -37,13 +34,11 @@ interface LibraryADT {
      * Returns a previously borrowed book and calculates any late fines.
      * @param isbn the ISBN of the book being returned
      * @param daysKept number of days the book was kept before returning
-     * @return true if the return is successful, false otherwise
      */
     void returnBook(int isbn, int daysKept);
     
     /**
      * Displays the borrowing history in LIFO order (newest to oldest).
-     * @return true if history exists and is displayed, false if history is empty
      */
     void viewLatestHistory();
 }
