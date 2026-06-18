@@ -13,11 +13,11 @@ public class BorrowStack {
     public void show() {
         // if the stack has no history logs, stop here
         if (stack.isEmpty()) {
-            System.out.println("📜 System Log: Borrowing history tracking is empty.");
+            System.out.println("System Log: Borrowing history tracking is empty.");
             return;
         }
         
-        System.out.println("\n--- 📜 System History Logs (Most Recent First) ---");
+        System.out.println("\n--- System History Logs (Most Recent First) ---");
         
         // loop backwards from the top of the stack to the bottom (lifo order)
         for (int i = stack.size() - 1; i >= 0; i--) {
@@ -31,9 +31,9 @@ public class BorrowStack {
                 
                 // check if the customer had to pay a late fine
                 if (b.fineAccumulated > 0) {
-                    System.out.println(" ⚠️ FINE PAID: $" + String.format("%.2f", b.fineAccumulated));
+                    System.out.printf(" FINE PAID: $%.2f\n", b.fineAccumulated);
                 } else {
-                    System.out.println(" ✅ Cleared On Time");
+                    System.out.println(" Cleared On Time");
                 }
             } else {
                 System.out.println(" | Status: OUTSTANDING (Not Returned Yet)");

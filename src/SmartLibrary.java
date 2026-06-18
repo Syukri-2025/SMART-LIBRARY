@@ -10,7 +10,7 @@ public class SmartLibrary implements LibraryADT {
     public void addBook(int isbn, String title, String author, int stock) {
         // insert the book into the bst database tree
         catalogue.insert(isbn, title, author, stock);
-        System.out.println("✅ Database Updated: Inventory values synchronized successfully.");
+        System.out.println("Database Updated: Inventory values synchronized successfully.");
     }
 
     @Override
@@ -19,11 +19,11 @@ public class SmartLibrary implements LibraryADT {
         Book b = catalogue.search(isbn);
         // if found, show its information and current stock levels
         if (b != null) {
-            System.out.println("🔍 Catalogue Item Found:");
+            System.out.println("Catalogue Item Found:");
             System.out.println("   Title: \"" + b.title + "\" | Author: " + b.author);
-            System.out.println("   📈 Stock Levels: [" + b.availableStock + " / " + b.totalStock + " copies available]");
+            System.out.println("  Stock Levels: [" + b.availableStock + " / " + b.totalStock + " copies available]");
         } else {
-            System.out.println("❌ Not Found: This ISBN does not exist in our systems.");
+            System.out.println(" Not Found: This ISBN does not exist in our systems.");
         }
     }
 
@@ -43,12 +43,12 @@ public class SmartLibrary implements LibraryADT {
                 
                 // push this snapshot record on top of the history stack
                 history.push(transactionRecord); 
-                System.out.println("📖 Transaction Approved: \"" + b.title + "\" checked out.");
+                System.out.println("Transaction Approved: \"" + b.title + "\" checked out.");
             } else {
-                System.out.println("❌ Stock Out: All copies of this title are currently loaned out.");
+                System.out.println("Stock Out: All copies of this title are currently loaned out.");
             }
         } else {
-            System.out.println("❌ Error: Invalid system transaction lookup. ISBN not found.");
+            System.out.println("Error: Invalid system transaction lookup. ISBN not found.");
         }
     }
 
@@ -75,18 +75,18 @@ public class SmartLibrary implements LibraryADT {
                 // push the return record onto the history stack
                 history.push(returnRecord);
 
-                System.out.println("✅ Process Return: Inventory restored to shelves.");
+                System.out.println("Process Return: Inventory restored to shelves.");
                 if (fine > 0) {
-                    System.out.println("⚠️ OVERDUE ACTION ALERT: Book kept for " + daysKept + " days.");
-                    System.out.println("   💵 Balance Due / Fine Charged: $" + String.format("%.2f", fine));
+                    System.out.println("OVERDUE ACTION ALERT: Book kept for " + daysKept + " days.");
+                    System.out.println("Balance Due / Fine Charged: $" + String.format("%.2f", fine));
                 } else {
-                    System.out.println("   🎉 Completed on time! Account status clear.");
+                    System.out.println(" Completed on time! Account status clear.");
                 }
             } else {
-                System.out.println("⚠️ Database Conflict: All copies are already checked back in.");
+                System.out.println("Database Conflict: All copies are already checked back in.");
             }
         } else {
-            System.out.println("❌ Error: Invalid returning registration index.");
+            System.out.println(" Error: Invalid returning registration index.");
         }
     }
 
@@ -103,12 +103,12 @@ public class SmartLibrary implements LibraryADT {
         Scanner sc = new Scanner(System.in);
         // keep running the application console menu loop continuously
         while (true) {
-            System.out.println("\n--- SmartLibrary ERP Menu ---");
+            System.out.println("\n--- SmartLibrary Menu ---");
             System.out.println("1. Add / Restock Book Inventory");
             System.out.println("2. Search Item & Check Stock Levels");
             System.out.println("3. Checkout Book (Borrow)");
             System.out.println("4. Checkin Book & Assess Fines (Return)");
-            System.out.println("5. View All Books in Alphabetical Order 🔤");
+            System.out.println("5. View All Books in Alphabetical Order");
             System.out.println("6. View Full Transactions & Fine Logs");
             System.out.println("7. Exit System Application");
             System.out.print("Choice: ");
@@ -173,7 +173,7 @@ public class SmartLibrary implements LibraryADT {
                 break;
 
             default:
-                System.out.println("⚠️ Invalid option selection. Please select an option between 1 and 7.");
+                System.out.println("Invalid option selection. Please select an option between 1 and 7.");
         }
     }
 
@@ -186,7 +186,7 @@ public class SmartLibrary implements LibraryADT {
                 return value;
             } catch (InputMismatchException e) {
                 // handle non-integer text entries gracefully without breaking the loop
-                System.out.print("⚠️ Numeric format mismatch! Please re-type an integer value: ");
+                System.out.print(" Numeric format mismatch! Please re-type an integer value: ");
                 sc.nextLine(); // clear out the corrupted text data from the buffer
             }
         }

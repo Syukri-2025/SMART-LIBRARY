@@ -27,23 +27,23 @@ public class BookBST {
         } else {
             r.totalStock += stock;
             r.availableStock += stock;
-            System.out.println("🔄 Existing ISBN found. Inventory restocked.");
+            System.out.println(" Existing ISBN found. Inventory restocked.");
         }
         return r; // return the current node pointer
     }
 
     // public method to look up a book using its isbn number
     public Book search(int i) {
-        return sea(root, i);
+        return helpsearch(root, i);
     }
 
     // helper method that uses recursion to search through the branches
-    private Book sea(Book r, int i) {
+    private Book helpsearch(Book r, int i) {
         // stop if the book is not found or if we find a match
         if (r == null || r.isbn == i) return r;
         
         // if target isbn is smaller, search left. otherwise, search right.
-        return (i < r.isbn) ? sea(r.left, i) : sea(r.right, i);
+        return (i < r.isbn) ? helpsearch(r.left, i) : helpsearch(r.right, i);
     }
 
     // public method to copy, sort, and show all books alphabetically
@@ -56,7 +56,7 @@ public class BookBST {
 
         // stop here if the tree has no books
         if (bookList.isEmpty()) {
-            System.out.println("📚 The catalogue is completely empty.");
+            System.out.println(" The catalogue is completely empty.");
             return;
         }
 
@@ -69,14 +69,14 @@ public class BookBST {
         });
 
         // print the sorted list to the console
-        System.out.println("\n--- 🔤 Books in Alphabetical Order ---");
+        System.out.println("\n---  Books in Alphabetical Order ---");
         for (Book b : bookList) {
             System.out.println("• \"" + b.title + "\" by " + b.author + 
                                " [ISBN: " + b.isbn + "] | Stock Available: " + b.availableStock + "/" + b.totalStock);
         }
     }
 
-    // helper method to copy tree nodes into a list (left, node, right order)
+    // helper method to copy tree nodes into a list (left, node, right order) transverse BST in sorted order
     private void collectNodes(Book node, List<Book> list) {
         if (node == null) return; // stop if the spot is empty
         
